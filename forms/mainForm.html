@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Login Page</title>
+    <style>
+        .relative-container {
+            position: relative;
+        }
+
+        .form-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            max-width: 480px; 
+            padding: 20px; 
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <nav class="bg-blue-500 flex text-white justify-between items-center">
+        <img src="https://www.freeiconspng.com/uploads/world-icon-png-6.png" class="h-10 mx-4 my-4">
+        <ul class="px-10 py-5 flex space-x-3">
+            <li><a href="#" class="cursor-pointer hover:underline">Home</a></li>
+            <li><a href="#" class="cursor-pointer hover:underline">About</a></li>
+            <li><a href="#" class="cursor-pointer hover:underline">Services</a></li>
+            <li><a href="#" class="cursor-pointer hover:underline">Contact Us</a></li>
+        </ul>
+    </nav>
+    <div class="relative-container">
+        <img src="https://t4.ftcdn.net/jpg/05/83/90/17/360_F_583901767_l0ZxyLupe4NHbNnLeEuTK35AvC2Ccu26.jpg" alt="main image" class="w-full h-auto">
+        <div class="form-container max-w-md bg-white rounded-lg shadow-md p-8">
+            <div class="text-center">
+                <img src="https://www.freeiconspng.com/uploads/world-icon-png-6.png" alt="Logo" class="mx-auto h-10 w-10 rounded-full">
+                <h2 class="text-2xl font-bold my-4">Register Your Data</h2>
+            </div>
+            <form action="/submit" method="POST">
+                <div class="mb-4 text-gray-700">
+                    <label for="id" class="block text-sm font-bold mb-2">ID</label>
+                    <input type="text" id="id" name="id" class="border rounded w-full py-2 px-3"
+                        placeholder="Enter your ID">
+                </div>
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                    <input type="text" id="name" name="name" class="border rounded w-full py-2 px-3 text-gray-700"
+                        placeholder="Enter your Name">
+                </div>
+                <div class="mb-4">
+                    <label for="position" class="block text-gray-700 text-sm font-bold mb-2">Position</label>
+                    <input type="text" id="position" name="position" class="border rounded w-full py-2 px-3 text-gray-700"
+                        placeholder="Enter your Position">
+                </div>
+                <div class="mb-4">
+                    <label for="age" class="block text-gray-700 text-sm font-bold mb-2">Age</label>
+                    <input type="number" id="age" name="age" class="border rounded w-full py-2 px-3 text-gray-700"
+                        placeholder="Enter your Age">
+                </div>
+                <hr>
+                <div class="flex items-center justify-center">
+                    <button type="submit" value="Submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
+                </div>
+            </form>
+            <div class="mt-6 text-center">
+                <span class="text-gray-600">Or continue with</span>
+                <div class="flex justify-center space-x-4 mt-4">
+                    <a href="https://www.google.co.in/">
+                        <button type="button"
+                            class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-300 rounded shadow-sm">
+                            
+                            <img src="https://e7.pngegg.com/pngimages/704/688/png-clipart-google-google.png" alt="Google" class="w-6 h-6 inline-block mr-2">Google</button>
+                    </a>
+                    <a href="https://github.com/">   
+                        <button type="button"
+                        class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-300 rounded shadow-sm">
+                        
+                        <img src="https://w7.pngwing.com/pngs/115/663/png-transparent-github-computer-icons-directory-github-mammal-cat-like-mammal-carnivoran.png" alt="GitHub" class="w-6 h-6 inline-block mr-2">GitHub</button>
+                    </a>    
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,122 +1,65 @@
 package main
 
 import (
-	"fmt"
+	"github/Sadotib/go-crud/globals"
+	"github/Sadotib/go-crud/handlers"
 	"github/Sadotib/go-crud/initializers"
-	"github/Sadotib/go-crud/models"
+	
+
+	"html/template"
 	"net/http"
-	"strconv"
+
 	"github.com/gin-gonic/gin"
-	 
 )
+
 func init() {
 	initializers.ConnectDatabase()
 }
+
 func main() {
-
-	initializers.DB.AutoMigrate(&models.User{})
-
+	globals.TPL, _ = template.ParseGlob("templates/*.html")
 	r := gin.Default()
-	r.LoadHTMLGlob("forms/*.html")
+	r.LoadHTMLGlob("templates/*.html")
 
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "adminYN.html", nil)
-
 	})
 
-	r.GET("/admin", func(c *gin.Context) {
-		admin_priv := c.Query("admin_privileges")
-		// c.String(http.StatusOK, "Hello %s", admin_priv)
-		if admin_priv == "yes" {
-			c.HTML(http.StatusOK, "adminForm.html", nil)
-		}
+	r.GET("/login", handlers.AdminPriv)
 
-		if admin_priv == "no" {
+	r.POST("/admin", handlers.AdminLogin)
 
-			c.HTML(http.StatusOK, "mainForm.html", nil)
+	// r.GET("/validate", middleware.RequireAuth,handlers.Validate)
 
-		}
-	})
+	r.GET("/admin", handlers.AdminDashboard)
 
-	r.POST("/admin", func(c *gin.Context) {
-		username := "admin"
-		pass := 12345
+	r.POST("/admin/entries", handlers.AcceptReject)
 
-		c.Request.ParseForm()
+	r.POST("/admin/create", handlers.CreateEvent)
 
-		//FormValue retrieves a single value by key, works for both GET and POST requests
-		user := c.Request.FormValue("username")
-		password := c.Request.FormValue("pass")
+	r.GET("/create", func(c *gin.Context) {
+		// TODO: will do later
+		create := c.Query("create")
 
-		passUINT, _ := strconv.Atoi(password)
-		var people []models.User
-		if username == user && pass == passUINT {
-
-			c.HTML(http.StatusOK, "adminApr.html", nil)
-
-			initializers.DB.Find(&people)
-
-			for _, i := range people {
-				fmt.Printf("|ID: %d | Name: %s | Position: %s | Age: %d | Approval Status: %s |\n", i.ID, i.Name, i.Position, i.Age, i.Approval_Status)
-			}
-
-			fmt.Print("\nApprove RegistrationID (0 for NONE): ")
-			var ag int
-			fmt.Scan(&ag)
-
-			if ag == 0 {
-				fmt.Print("\nNO APPROVAL GRANTED\n")
-			} else {
-				initializers.DB.Model(&people).Where("ID = ?", ag).Update("Approval_Status", "Granted")
-			}
-			fmt.Print("\nDeny RegistrationID (0 for NONE): ")
-			var ad int
-			fmt.Scan(&ad)
-
-			if ad == 0 {
-				fmt.Print("\nNO APPROVAL DENIED\n\n")
-			} else {
-				initializers.DB.Model(&people).Where("ID = ?", ag).Update("Approval_Status", "Denied")
-			}
-
-		}
-		if username != user || pass != passUINT {
-
-			c.String(http.StatusOK, "Incorrect Username or Password")
+		if create == "user" {
+			c.HTML(http.StatusOK, "userForm.html", nil)
 		}
 	})
-	r.GET("/submit", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "user_form.html", nil)
-	})
-	r.POST("/submit", func(c *gin.Context) {
-		var employee models.User
 
-		// Parse the form data. PostForm returns a map of form values and only works for POST requests
-		id := c.PostForm("id")
-		name := c.PostForm("name")
-		position := c.PostForm("position")
-		age := c.PostForm("age")
+	r.POST("/create/user", handlers.EnterUserDetails)
 
-		ageUINT, _ := strconv.Atoi(age) //convert string to int using strconv
-		idUINT, _ := strconv.Atoi(id)   //convert string to int using strconv
-
-		fmt.Println(idUINT)
-		employee.ID = uint8(idUINT)
-		fmt.Println(employee.ID)
-		employee.Name = name
-		employee.Position = position
-		employee.Age = uint(ageUINT)
-
-		// err := c.Bind(&employee)
-		// if err!= nil {
-		// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		// 	return
-		// }
-		user := models.User{ID: employee.ID, Name: employee.Name, Position: employee.Position, Age: employee.Age}
-		initializers.DB.Create(&user)
-
-		c.JSON(http.StatusCreated, gin.H{"message": "Employee created successfully"})
-	})
+	r.POST("/create/user/selectevent", handlers.SelectNRegister)
 
 	r.Run(":8080")
 }
+
+//TODO: 1) fix the foreign key problem and registration db not getting created [FIXED]
+//2) fix the return message after succesfull user or event creation
+//3) watch the video on keeping users logged in which will be used to keep admin logged in
+//4) if possible, return the data entered by user after successful registration with their info and events they have registered for
+//5) make a table for the users using which they can check all the events available and register for each one using buttons [FIXED]
+//6) make a home page before asking if you are admin. also give functionalities to the navigation menu buttons
+//7) fix the fetchEvents table, update the columns [FIXED]
+//8) if possible, give an email feature using that tool where user recieves email notification of successful registration
+//9) do some error handling and give a creative "page not found" page
+//10) fix the approve and reject of the fetchEntries file so that admin can approve or reject. If rejected, delete the user and if possible notify them using email

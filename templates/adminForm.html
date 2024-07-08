@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Login Page</title>
+    <title>Admin Page</title>
     <style>
         .relative-container {
             position: relative;
@@ -16,10 +16,11 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 100%; /* Full width */
-            max-width: 480px; /* Increased max width */
-            padding: 20px; /* Added padding */
+            width: 100%;
+            max-width: 480px; 
+            padding: 20px; 
         }
+       
     </style>
 </head>
 
@@ -40,139 +41,30 @@
                 <img src="https://www.freeiconspng.com/uploads/world-icon-png-6.png" alt="Logo" class="mx-auto h-10 w-10 rounded-full">
                 <h2 class="text-2xl font-bold my-4">Admin Page</h2>
             </div>
-            <form action="/admin" method="get" target="_blank">
+            <form action="/admin" method="POST" onsubmit="this.reset();">
                 <div class="mb-4 text-gray-700">
-                    <label for="admin_privileges" class="block text-sm font-bold mb-2">Admin</label>
-                    <input type="radio" id="admin_yes" name="admin_privileges" value="yes"> Yes
-                    <input type="radio" id="admin_no" name="admin_privileges" value="no"> No
+                    <label for="username" class="block text-sm font-bold mb-2">Username</label>
+                    <input type="text" id="username" name="username" class="border rounded w-full py-2 px-3"
+                        placeholder="Enter your Username">
                 </div>
+                <div class="mb-4">
+                    <label for="pass" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                    <input type="password" id="pass" name="pass" class="border rounded w-full py-2 px-3 text-gray-700"
+                        placeholder="Enter your Password">
+                </div>
+                
+                <br>
                 <div class="flex items-center justify-center">
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
+                    <button type="submit" value="Submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
                 </div>
             </form>
         </div>
     </div>
+
+
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -19,4 +19,7 @@ func ConnectDatabase() {
 	if err != nil {
 		log.Fatal("Failed to connect to database")
 	}
+
+	// sqlDB, _ := DB.DB()
+	// defer sqlDB.Close()
 }

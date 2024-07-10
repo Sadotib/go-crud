@@ -21,7 +21,7 @@ func main() {
 	r.LoadHTMLGlob("templates/*.html")
 
 	r.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "adminYN.html", nil)
+		c.HTML(http.StatusOK, "index.html", nil)
 	})
 
 	r.GET("/favicon.ico", func(c *gin.Context) {

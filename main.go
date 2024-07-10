@@ -1,7 +1,6 @@
 package main
 
 import (
-	
 	"github/Sadotib/go-crud/globals"
 	"github/Sadotib/go-crud/handlers"
 	"github/Sadotib/go-crud/initializers"
@@ -23,6 +22,10 @@ func main() {
 
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "adminYN.html", nil)
+	})
+
+	r.GET("/favicon.ico", func(c *gin.Context) {
+		http.ServeFile(c.Writer, c.Request, "templates/favicon.ico")
 	})
 
 	r.GET("/login", handlers.AdminPriv)

@@ -6,7 +6,7 @@ import (
 	"github/Sadotib/go-crud/initializers"
 	"github/Sadotib/go-crud/models"
 	"os"
-	
+
 	"time"
 	"unicode"
 
@@ -164,9 +164,27 @@ func AcceptReject(c *gin.Context) {
 		if action == "accept" {
 			// perform accept action for row with ID row.ID
 			initializers.DB.Model(&models.User{}).Where("id = ?", peep.ID).Update("approval_status", "Accepted")
+			err := globals.TPL.ExecuteTemplate(c.Writer, "success.html", struct {
+				Message string
+			}{
+				Message: "Values Updated",
+			})
+			if err != nil {
+				http.Error(c.Writer, "Error rendering template", http.StatusInternalServerError)
+				return
+			}
 		} else if action == "reject" {
 			// perform reject action for row with ID row.ID
 			initializers.DB.Model(&models.User{}).Where("id = ?", peep.ID).Update("approval_status", "Rejected")
+			err := globals.TPL.ExecuteTemplate(c.Writer, "success.html", struct {
+				Message string
+			}{
+				Message: "Values Updated",
+			})
+			if err != nil {
+				http.Error(c.Writer, "Error rendering template", http.StatusInternalServerError)
+				return
+			}
 		}
 
 	}
@@ -364,14 +382,14 @@ func LoginUser(c *gin.Context) {
 
 }
 
-type Profile struct{
-	ID string
-	Username string
-	Email string
-	Events []uint8
+type Profile struct {
+	ID         string
+	Username   string
+	Email      string
+	Events     []uint8
 	EventNames []string
-	
 }
+
 func UserDashboard(c *gin.Context) {
 	tokenCookie, err := c.Request.Cookie("usertoken")
 
@@ -395,15 +413,13 @@ func UserDashboard(c *gin.Context) {
 	}
 
 	action := c.Query("action")
-	
+
 	var b Profile
 	if action == "profile" {
 
-		
-		
-		initializers.DB.Raw("SELECT id FROM users WHERE name=?",u).Scan(&b.ID)
-		initializers.DB.Raw("SELECT email FROM users WHERE name=?",u).Scan(&b.Email)
-		initializers.DB.Raw("SELECT event_id FROM registrations WHERE user_id=?",b.ID).Scan(&b.Events)
+		initializers.DB.Raw("SELECT id FROM users WHERE name=?", u).Scan(&b.ID)
+		initializers.DB.Raw("SELECT email FROM users WHERE name=?", u).Scan(&b.Email)
+		initializers.DB.Raw("SELECT event_id FROM registrations WHERE user_id=?", b.ID).Scan(&b.Events)
 		// for i := 0; i < len(b.Events); i++ {
 		// 	k := b.Events[i]
 		// 	var p string
@@ -415,13 +431,12 @@ func UserDashboard(c *gin.Context) {
 			initializers.DB.Raw("SELECT event_name FROM events WHERE event_id=?", k).Scan(&p)
 			b.EventNames = append(b.EventNames, p)
 		}
-		b.Username=u
+		b.Username = u
 		fmt.Println(b.EventNames)
 		fmt.Println("kkkk")
 
 		globals.TPL.ExecuteTemplate(c.Writer, "fetchProfile.html", b)
-		
-	
+
 	} else if action == "logout" {
 		http.SetCookie(c.Writer, &http.Cookie{
 			Name:   "usertoken",

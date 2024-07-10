@@ -4,6 +4,7 @@ import (
 	"github/Sadotib/go-crud/globals"
 	"github/Sadotib/go-crud/handlers"
 	"github/Sadotib/go-crud/initializers"
+	"log"
 
 	"html/template"
 	"net/http"
@@ -16,11 +17,27 @@ func init() {
 }
 
 func main() {
-	globals.TPL, _ = template.ParseGlob("templates/*.html")
 	r := gin.Default()
-	r.LoadHTMLGlob("templates/*.html")
+
+	globals.TPL, _ = template.ParseGlob("templates/*.html")
+	// r.LoadHTMLFiles("index.html")
+	// r.LoadHTMLGlob("templates/*.html")
+	t, err := template.ParseFiles("index.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	t, err = t.ParseGlob("templates/*.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	r.SetHTMLTemplate(t)
 
 	r.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.html", nil)
+	})
+	r.GET("/home", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "adminYN.html", nil)
 	})
 

@@ -1,11 +1,14 @@
 package models
 
+
+
 type User struct {
 	ID              string         `gorm:"primaryKey;not null;autoIncrement:false"`
-	Name            string         `gorm:"not null"`
-	Position        string         `gorm:"not null"`
+	Name            string         `gorm:"not null;unique"`
+	Email           string         `gorm:"not null;unique"`
 	Age             uint8          `gorm:"not null"`
 	Approval_Status string         `gorm:"default:Pending"`
+	Password        string `gorm:"not null"`
 	Registrations   []Registration `gorm:"foreignkey:UserID"`
 	// TODO: fix the problem of registration table not getting created and check the foreign key problem
 }

@@ -92,40 +92,35 @@
 </head>
 
 <body>
-    <form action="/admindash/entries" method="post">
-        <div class="header_fixed">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Age</th>
-                        <th>Approval_Status</th>
-                        <th>Remark</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{ range . }}
-                    <tr>
-                        <td>{{ .ID }}</td>
-                        <td>{{ .Name }}</td>
-                        <td>{{ .Position }}</td>
-                        <td>{{ .Age }}</td>
-                        <td>{{ .Approval_Status }}</td>
-                        <td>
 
-                            <input type="radio" id="accept_{{ .ID }}" name="action_{{.ID }}" value="accept">
-                            <label for="accept_{{.ID }}">Accept</label>
-                            <input type="radio" id="reject_{{ .ID }}" name="action_{{.ID }}" value="reject">
-                            <label for="reject_{{.ID }}">Reject</label>
-                    </tr>
-                    {{ end }}
-                </tbody>
-            </table>
-            <button type="submit" value="Submit">Submit</button>
-        </div>
-    </form>
+    <div class="header_fixed">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Events registered for</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{.ID }}</td>
+                    <td>{{.Username }}</td>
+                    <td>{{.Email }}</td>
+                    <td>
+                        <ol>
+                            {{ range.EventNames }}   
+                                <li>{{ . }}</li>
+                            {{ end }}
+                        </ol>
+                       
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
 </body>
 
 </html>

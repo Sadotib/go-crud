@@ -6,9 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrator</title>
-    
+
     <style>
-        
         * {
             margin: 0;
             padding: 0;
@@ -33,7 +32,7 @@
             width: 100%;
             overflow: auto;
             border: 1px solid #dddddd;
-            
+
         }
 
         .header_fixed thead th {
@@ -49,10 +48,10 @@
             border-bottom: 1px solid #fdfdfd;
             padding: 10px 20px;
             font-size: 14px;
-            
+
         }
 
-        
+
         tr:nth-child(even) {
             background-color: #fdfbfb;
         }
@@ -61,11 +60,11 @@
             background-color: #edeef1;
         }
 
-        td:hover button{
+        td:hover button {
             color: #000000;
             cursor: pointer;
             background-color: #a7a4a4;
-            
+
         }
 
 
@@ -75,7 +74,7 @@
             border-radius: 20px;
             background-color: black;
             color: #e6e7e8;
-            
+
         }
 
         ::-webkit-scrollbar {
@@ -93,7 +92,7 @@
 </head>
 
 <body>
-    <form action="/create/user/selectevent" method="post">
+    <form action="/userregister/selectevent" method="post">
         <div class="header_fixed">
             <table>
                 <thead>
@@ -109,27 +108,25 @@
                     <tr>
                         <td>{{ .EventID }} </td>
                         <td>{{ .EventName }}</td>
-                        <td>{{ .Description }}</td>     
-                        <td>      
-                            <input type="checkbox" name="event_ids[]" value="{{ .EventID }}">    
+                        <td>{{ .Description }}</td>
+                        <td>
+                            <input type="checkbox" name="event_ids[]" value="{{ .EventID }}">
                         </td>
-                                      
+
                     </tr>
                     {{ end }}
-                    
-                   
+
+
                 </tbody>
             </table>
-            
+
             <button type="submit" value="Submit">Register</button>
-            <!-- <input type="hidden" name="selected_records" value="selected_records">
-            <button type="submit">Register Selected Records</button>
-            -->
+
             <br><br>
-            <!-- <h2 style="color: red;">{{.Mess}}</h2> -->
+
         </div>
-    </form>   
-    
+    </form>
+
 </body>
 
 </html>

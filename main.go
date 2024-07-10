@@ -1,10 +1,10 @@
 package main
 
 import (
+	
 	"github/Sadotib/go-crud/globals"
 	"github/Sadotib/go-crud/handlers"
 	"github/Sadotib/go-crud/initializers"
-	
 
 	"html/template"
 	"net/http"
@@ -29,26 +29,30 @@ func main() {
 
 	r.POST("/admin", handlers.AdminLogin)
 
-	// r.GET("/validate", middleware.RequireAuth,handlers.Validate)
+	r.GET("/admindash", handlers.AdminDashboard)
 
-	r.GET("/admin", handlers.AdminDashboard)
+	r.POST("/admindash/entries", handlers.AcceptReject)
 
-	r.POST("/admin/entries", handlers.AcceptReject)
+	r.POST("/admindash/create", handlers.CreateEvent)
 
-	r.POST("/admin/create", handlers.CreateEvent)
-
-	r.GET("/create", func(c *gin.Context) {
+	r.GET("/action", func(c *gin.Context) {
 		// TODO: will do later
-		create := c.Query("create")
+		create := c.Query("action")
 
-		if create == "user" {
-			c.HTML(http.StatusOK, "userForm.html", nil)
+		if create == "register" {
+			c.HTML(http.StatusOK, "userRegisterForm.html", nil)
+		} else if create == "login" {
+			//write code here
+			c.HTML(http.StatusOK, "userLoginForm.html", nil)
 		}
 	})
 
-	r.POST("/create/user", handlers.EnterUserDetails)
+	r.POST("/user", handlers.LoginUser)
 
-	r.POST("/create/user/selectevent", handlers.SelectNRegister)
+	r.POST("/userregister", handlers.RegisterUser)
+
+	r.POST("/userregister/selectevent", handlers.SelectNRegister)
+	r.GET("/userdash", handlers.UserDashboard)
 
 	r.Run(":8080")
 }

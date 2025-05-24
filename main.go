@@ -5,6 +5,7 @@ import (
 	"github/Sadotib/go-crud/handlers"
 	"github/Sadotib/go-crud/initializers"
 	"log"
+	"os"
 
 	"html/template"
 	"net/http"
@@ -25,7 +26,7 @@ func main() {
 	t, err := template.ParseFiles("index.html")
 	if err != nil {
 		log.Fatal(err)
-	}
+	} 
 
 	t, err = t.ParseGlob("templates/*.html")
 	if err != nil {
@@ -74,7 +75,12 @@ func main() {
 	r.POST("/userregister/selectevent", handlers.SelectNRegister)
 	r.GET("/userdash", handlers.UserDashboard)
 
-	r.Run(":8080")
+	port := os.Getenv("PORT")
+	if port ==""{
+		port= "3000"
+	}
+
+	r.Run("0.0.0.0:" + port)
 }
 
 //TODO: 1) fix the foreign key problem and registration db not getting created [FIXED]

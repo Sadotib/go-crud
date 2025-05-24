@@ -73,7 +73,7 @@ func AdminLogin(c *gin.Context) {
 	// 	http.Error(c.Writer, "Error creating token", http.StatusBadRequest)
 	// }
 	tokenLoginString, err := tokenLogin.SignedString([]byte(os.Getenv("SECRET_TOKEN_ADMIN")))
-	if err != nil {
+	if err != nil{
 		http.Error(c.Writer, "Error generating login token", http.StatusInternalServerError)
 		return
 	}
@@ -394,8 +394,10 @@ func UserDashboard(c *gin.Context) {
 	tokenCookie, err := c.Request.Cookie("usertoken")
 
 	if err != nil {
-		http.Error(c.Writer, "Invalid token 1", http.StatusUnauthorized)
+		// http.Error(c.Writer, "Invalid token 1", http.StatusUnauthorized)
+		c.HTML(http.StatusOK, "invalid.html", nil)
 		fmt.Println(err)
+		
 
 		return
 	}
